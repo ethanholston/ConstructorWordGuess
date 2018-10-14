@@ -9,6 +9,7 @@ class Word {
                 letArr.push(new letter(wordArr[i]));
                 if(wordArr[i] == " "){
                     letArr[i].display = " ";
+                    letArr[i].guessed = true;
                 }
             }
             return letArr;
@@ -24,8 +25,8 @@ class Word {
         this.buildString = function(x){
             var ansString;
             for(let i=0; i<x.length; i++){
-                ansString += x.display;
-            };
+                ansString += x[i].display;
+            }
             return ansString;
         }
         // debug;
