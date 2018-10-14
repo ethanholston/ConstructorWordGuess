@@ -15,22 +15,26 @@ class Word {
             return letArr;
         },
         this.guess = function(input){
-            for(let i=0; i<letArr.length; i++){
-                if(letArr[j].toLowerCase() == input || letArr[j].toUpperCase() == input ){
-                    letArr[j].guessed = true;
-                    letArr[j].display = this.letter;
+            // console.log(arr[0].letter);
+            for(let i=0; i<this.ansAsArr.length; i++){
+                if(this.ansAsArr[i].letter.toLowerCase() == input || this.ansAsArr[i].letter.toUpperCase() == input ){
+                    this.ansAsArr[i].guessed = true;
+                    this.ansAsArr[i].display = this.ansAsArr[i].letter;
                 }
             }
+            this.buildString(this.ansAsArr);
         },
         this.buildString = function(x){
-            var ansString;
+            // console.log(x);
+            var ansString = "";
             for(let i=0; i<x.length; i++){
                 ansString += x[i].display;
+                ansString += " ";
             }
-            return ansString;
+            console.log(ansString);
         }
-        // debug;
-        // this.buildArr();
+        this.ansAsArr = this.buildArr(word);
+        this.ansAsStr = this.buildString(this.ansAsArr);
     }
 }
 
