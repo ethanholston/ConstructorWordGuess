@@ -16,22 +16,25 @@ class Word {
         },
         this.guess = function(input){
             // console.log(arr[0].letter);
+            var guessCorrect;
             for(let i=0; i<this.ansAsArr.length; i++){
                 if(this.ansAsArr[i].letter.toLowerCase() == input || this.ansAsArr[i].letter.toUpperCase() == input ){
                     this.ansAsArr[i].guessed = true;
                     this.ansAsArr[i].display = this.ansAsArr[i].letter;
+                    this.ansAsStr = this.buildString(this.ansAsArr);
+                    guessCorrect = true;
                 }
             }
-            this.buildString(this.ansAsArr);
+            return guessCorrect;
         },
         this.buildString = function(x){
-            // console.log(x);
+            // console.log(x); 
             var ansString = "";
             for(let i=0; i<x.length; i++){
                 ansString += x[i].display;
                 ansString += " ";
             }
-            console.log(ansString);
+            return ansString;
         }
         this.ansAsArr = this.buildArr(word);
         this.ansAsStr = this.buildString(this.ansAsArr);

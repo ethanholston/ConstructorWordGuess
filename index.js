@@ -4,18 +4,31 @@ var inquirer = require("inquirer");
 var ansArr = ["The Godfather", "Big Daddy", "Harold and Kumar"];
 var answer;
 var turnsLeft;
-var gameWon;
-var gameLost;
 
 function newGame(){
     answer = new Word(ansArr[0]);
-    takeTurn();
     turnsLeft = 9;
+    takeTurn();
 }
 
 function wonOrLost(x){
-    if(x) console.log("You won");
-    if(!x) console.log("You lost");
+    if(x){
+        console.log("You won!");
+    }
+    else if(!x){
+        console.log("You lost");
+    }
+    inquirer.prompt([
+        {
+            name: "again",
+            type: "rawlist",
+            message: "Play again?",
+            choices: ["Yes", "No"]
+        }
+    ]).then(function(res){
+        if(res.again == "Yes") newGame();
+    });
+
 }
 
 
@@ -23,7 +36,7 @@ function checkGameOver(){
     var guessedCount = 0;
     var gameOver;
     for(let i=0; i<answer.ansAsArr.length; i++){
-        if(answer.ansAsArr.guessed){
+        if(answer.ansAsArr[i].guessed){
             guessedCount++;
         }
     }
@@ -41,15 +54,16 @@ function checkGameOver(){
 }
 
 function takeTurn(){
-    // console.log(answer.ansAsStr);
+    console.log("You have " + turnsLeft + " guesses left");
+    console.log(answer.ansAsStr);
     inquirer.prompt([
         {
             name: "guess",
             message: "Guess a letter"
         }
     ]).then(function(res){
-        console.log(res);
         answer.guess(res.guess);
+        if(!answer.guess(res.guess)) turnsLeft--;
         checkGameOver();
     });
 }
