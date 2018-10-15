@@ -14,7 +14,7 @@ function newGame(){
     takeTurn();
 }
 
-function wonOrLost(x){
+function wonOrLost(x){ //takes boolean as parameter
     if(x){
         console.log("You won!");
     }
@@ -36,8 +36,7 @@ function wonOrLost(x){
 
 
 function checkGameOver(){
-    var guessedCount = 0;
-    var gameOver;
+    var guessedCount = 0; //gets a count of how many letters have been guessed
     for(let i=0; i<answer.ansAsArr.length; i++){
         if(answer.ansAsArr[i].guessed){
             guessedCount++;
@@ -45,11 +44,9 @@ function checkGameOver(){
     }
     if(turnsLeft == 0){
         wonOrLost(false);
-        gameOver = true;
     }
-    else if (guessedCount == answer.ansAsArr.length){
+    else if (guessedCount == answer.ansAsArr.length){ //checks if all letters have been guessed
         wonOrLost(true);
-        gameOver = true;
     }
     else{
         takeTurn();
@@ -66,14 +63,14 @@ function takeTurn(){
             message: "Guess a letter"
         }
     ]).then(function(res){
-        if((alpha.indexOf(res.guess.toLowerCase()) > -1 || alpha.indexOf(res.guess.toUpperCase() > -1)) && lettersGuessed.indexOf(res.guess.toLowerCase()) == -1){
+        if(alpha.indexOf(res.guess.toLowerCase()) > -1 && lettersGuessed.indexOf(res.guess.toLowerCase()) == -1){
             lettersGuessed.push(res.guess.toLowerCase());
             // console.log(lettersGuessed)
-            answer.guess(res.guess);
-            if(!answer.guess(res.guess)) turnsLeft--;
+            answer.guess(res.guess); 
+            if(!answer.guess(res.guess)) turnsLeft--; //decrements turnsLeft if guess() returns false
             checkGameOver();
         }
-        else if(lettersGuessed.indexOf(res.guess.toLowerCase()) > -1 || lettersGuessed.indexOf(res.guess.toUpperCase() > -1)){
+        else if(lettersGuessed.indexOf(res.guess.toLowerCase()) > -1){
             console.log("You already guessed that. Try again");
             takeTurn();
         }
