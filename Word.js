@@ -2,7 +2,7 @@ var letter = require ('./Letter.js')
 
 class Word {
     constructor(word){
-        this.buildArr = function(){
+        this.buildArr = function(){ 
             var letArr = [];
             var wordArr = word.split("");
             for(let i=0; i<wordArr.length; i++){

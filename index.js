@@ -4,10 +4,13 @@ var inquirer = require("inquirer");
 var ansArr = ["The Godfather", "Big Daddy", "Harold and Kumar"];
 var answer;
 var turnsLeft;
+var lettersGuessed;
+var alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
 function newGame(){
-    answer = new Word(ansArr[0]);
+    answer = new Word(ansArr[Math.floor(Math.random() * ansArr.length)]);
     turnsLeft = 9;
+    lettersGuessed = [];
     takeTurn();
 }
 
@@ -54,6 +57,7 @@ function checkGameOver(){
 }
 
 function takeTurn(){
+    console.log("----------------------")
     console.log("You have " + turnsLeft + " guesses left");
     console.log(answer.ansAsStr);
     inquirer.prompt([
@@ -62,9 +66,21 @@ function takeTurn(){
             message: "Guess a letter"
         }
     ]).then(function(res){
-        answer.guess(res.guess);
-        if(!answer.guess(res.guess)) turnsLeft--;
-        checkGameOver();
+        if((alpha.indexOf(res.guess.toLowerCase()) > -1 || alpha.indexOf(res.guess.toUpperCase() > -1)) && lettersGuessed.indexOf(res.guess.toLowerCase()) == -1){
+            lettersGuessed.push(res.guess.toLowerCase());
+            // console.log(lettersGuessed)
+            answer.guess(res.guess);
+            if(!answer.guess(res.guess)) turnsLeft--;
+            checkGameOver();
+        }
+        else if(lettersGuessed.indexOf(res.guess.toLowerCase()) > -1 || lettersGuessed.indexOf(res.guess.toUpperCase() > -1)){
+            console.log("You already guessed that. Try again");
+            takeTurn();
+        }
+        else{
+            console.log("Invalid input. Please select a letter");
+            takeTurn();
+        }
     });
 }
 
